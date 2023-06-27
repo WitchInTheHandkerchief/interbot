@@ -3,7 +3,7 @@ from aiogram.dispatcher import filters
 from aiogram.types import Message
 
 from interbot.config import dp
-from interbot.services.messages_services import start_command
+from interbot.services.commands_services import start_command
 
 
 @dp.message_handler(filters.CommandStart)
