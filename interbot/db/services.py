@@ -14,10 +14,7 @@ def check_user(user_id: int) -> bool:
     conn.commit()
     cur.close()
     conn.close()
-    if result == 1:
-        return True
-    else:
-        return False
+    return bool(result[0])
 
 
 def check_admin(user_id: int) -> bool:
@@ -32,7 +29,4 @@ def check_admin(user_id: int) -> bool:
     conn.commit()
     cur.close()
     conn.close()
-    if result == 1:
-        return True
-    else:
-        return False
+    return bool(result[0])
