@@ -1,3 +1,5 @@
+from typing import List
+
 import psycopg2
 from aiogram.types import Message
 from decouple import config
@@ -87,3 +89,18 @@ def save_sponsor(msg: Message, sponsor: str) -> None:
     conn.commit()
     cur.close()
     conn.close()
+
+
+def fetch_sponsor(sponsor: str) -> List[tuple]:
+    conn = psycopg2.connect(
+        host=config('HOST'),
+        database=config('DB'),
+        user=config('USER'),
+        password=config('PASSWORD'))
+    cur = conn.cursor()
+    cur.execute(f"SELECT instagram, date_added FROM sponsors WHERE instagram = '{sponsor}';")
+    result = cur.fetchall()
+    conn.commit()
+    cur.close()
+    conn.close()
+    return result

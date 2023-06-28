@@ -5,3 +5,4 @@ class Form(StatesGroup):
     token = State()
     name = State()
     sponsor = State()
+    check_sponsor = State()

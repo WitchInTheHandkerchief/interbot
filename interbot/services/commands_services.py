@@ -53,3 +53,11 @@ async def register_sponsor_command(msg: Message) -> None:
     else:
         pass
 
+
+async def check_sponsor_command(msg: Message) -> None:
+    is_registered = check_user(msg.from_user.id)
+    if is_registered:
+        await Form.check_sponsor.set()
+        await msg.answer(text='Введите <b>инстаграм</b> спонсора, которого хотите проверить', parse_mode=ParseMode.HTML)
+    else:
+        pass

@@ -1,7 +1,7 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ParseMode
 
-from interbot.db.services import check_token, save_telegram_id, save_full_name, save_sponsor
+from interbot.db.services import check_token, save_telegram_id, save_full_name, save_sponsor, fetch_sponsor
 from interbot.states import Form
 
 
@@ -30,3 +30,14 @@ async def process_sponsor_message(msg: Message, state: FSMContext) -> None:
     save_sponsor(msg, msg.text)
     await state.finish()
     await msg.answer(text='<b>Обзвон зарегистрирован!</b>', parse_mode=ParseMode.HTML)
+
+
+async def process_checking_sponsor_message(msg: Message, state: FSMContext) -> None:
+    await state.finish()
+    call_list = fetch_sponsor(msg.text)
+    if call_list:
+        for call in call_list:
+            await msg.answer(text=f'Спонсор {call[0]} был обзвонен {call[1]}', parse_mode=ParseMode.HTML)
+    else:
+        await msg.answer(text='Спонсор не был обзвонен', parse_mode=ParseMode.HTML)
+

@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 from interbot.config import dp
 from interbot.services.commands_services import start_command, cancel_command, register_command, \
-    register_sponsor_command
+    register_sponsor_command, check_sponsor_command
 from interbot.services.messages_services import process_token_message
 from interbot.states import Form
 
@@ -29,7 +29,14 @@ async def register_sponsor(msg: Message) -> None:
     await register_sponsor_command(msg)
 
 
+@dp.message_handler(commands=['check_sponsor'])
+async def check_sponsor(msg: Message) -> None:
+    await check_sponsor_command(msg)
+
+
 def setup(disp: Dispatcher):
     disp.register_inline_handler(start)
     disp.register_inline_handler(cancel)
     disp.register_inline_handler(register)
+    disp.register_inline_handler(register_sponsor)
+    disp.register_inline_handler(check_sponsor)
