@@ -1,7 +1,7 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, ParseMode
 
-from interbot.db.services import check_token, save_telegram_id, save_full_name
+from interbot.db.services import check_token, save_telegram_id, save_full_name, save_sponsor
 from interbot.states import Form
 
 
@@ -24,3 +24,9 @@ async def process_name_message(msg: Message, state: FSMContext) -> None:
     await state.finish()
     save_full_name(msg.text, msg.from_user.id)
     await msg.answer(text='<b>Вы успешно зарегистрировались!</b>', parse_mode=ParseMode.HTML)
+
+
+async def process_sponsor_message(msg: Message, state: FSMContext) -> None:
+    save_sponsor(msg, msg.text)
+    await state.finish()
+    await msg.answer(text='<b>Обзвон зарегистрирован!</b>', parse_mode=ParseMode.HTML)

@@ -3,7 +3,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 
 from interbot.config import dp
-from interbot.services.commands_services import start_command, cancel_command, register_command
+from interbot.services.commands_services import start_command, cancel_command, register_command, \
+    register_sponsor_command
 from interbot.services.messages_services import process_token_message
 from interbot.states import Form
 
@@ -21,6 +22,11 @@ async def cancel(msg: Message, state: FSMContext) -> None:
 @dp.message_handler(commands=['register'])
 async def register(msg: Message, state: FSMContext) -> None:
     await register_command(msg, state)
+
+
+@dp.message_handler(commands=['register_sponsor'])
+async def register_sponsor(msg: Message) -> None:
+    await register_sponsor_command(msg)
 
 
 def setup(disp: Dispatcher):

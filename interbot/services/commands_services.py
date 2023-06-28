@@ -44,3 +44,12 @@ async def register_command(msg: Message, state: FSMContext) -> None:
         await Form.token.set()
         await msg.answer(text='Введите пожалуйста ваш токен', parse_mode=ParseMode.HTML)
 
+
+async def register_sponsor_command(msg: Message) -> None:
+    is_admin = check_admin(msg.from_user.id)
+    if is_admin:
+        await msg.answer(text='Введите <b>инстаграм</b> обзвоненного спонсора', parse_mode=ParseMode.HTML)
+        await Form.sponsor.set()
+    else:
+        pass
+
