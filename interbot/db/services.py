@@ -33,16 +33,42 @@ def check_admin(user_id: int) -> bool:
     return bool(result[0])
 
 
-def check_token(token: int) -> bool:
+def check_token(token: str) -> bool:
     conn = psycopg2.connect(
         host=config('HOST'),
         database=config('DB'),
         user=config('USER'),
         password=config('PASSWORD'))
     cur = conn.cursor()
-    cur.execute(f'SELECT COUNT(1) FROM USERS WHERE token = {token} AND full_name IS NULL;')
+    cur.execute(f"SELECT COUNT(1) FROM USERS WHERE token = '{token}' AND full_name IS NULL;")
     result = cur.fetchone()
     conn.commit()
     cur.close()
     conn.close()
     return bool(result[0])
+
+
+def save_telegram_id(telegram_id: int, token: str) -> None:
+    conn = psycopg2.connect(
+        host=config('HOST'),
+        database=config('DB'),
+        user=config('USER'),
+        password=config('PASSWORD'))
+    cur = conn.cursor()
+    cur.execute(f"UPDATE users SET telegram_id = {telegram_id} WHERE token = '{token}';")
+    conn.commit()
+    cur.close()
+    conn.close()
+
+
+def save_full_name(full_name: str, telegram_id: int) -> None:
+    conn = psycopg2.connect(
+        host=config('HOST'),
+        database=config('DB'),
+        user=config('USER'),
+        password=config('PASSWORD'))
+    cur = conn.cursor()
+    cur.execute(f"UPDATE users SET full_name = '{full_name}' WHERE telegram_id = {telegram_id};")
+    conn.commit()
+    cur.close()
+    conn.close()

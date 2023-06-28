@@ -7,12 +7,12 @@ from interbot.services.messages_services import process_token_message, process_n
 from interbot.states import Form
 
 
-@dp.message_handler(state=Form.token)
+@dp.message_handler(state=Form.token, content_types=['text'])
 async def process_token(msg: Message, state: FSMContext) -> None:
     await process_token_message(msg, state)
 
 
-@dp.message_handler(state=Form.name)
+@dp.message_handler(state=Form.name, content_types=['text'])
 async def process_name(msg: Message, state: FSMContext) -> None:
     await process_name_message(msg, state)
 
