@@ -13,9 +13,9 @@ def init_db() -> None:
                 'id SERIAL PRIMARY KEY,'
                 'telegram_id INT UNIQUE,'
                 'full_name VARCHAR(255) NOT NULL,'
-                'token TEXT UNIQUE NOT NULL,'
+                'token TEXT UNIQUE,'
                 'department VARCHAR(255),'
-                'is_admin BOOLEAN NOT NULL DEFAULT false);'
+                'is_admin BOOLEAN NOT NULL DEFAULT true);'
                 
                 'CREATE TABLE IF NOT EXISTS activity_categories ('
                 'id SERIAL PRIMARY KEY,'
@@ -27,7 +27,7 @@ def init_db() -> None:
                 'name VARCHAR(255) NOT NULL,'
                 'category_id INT REFERENCES activity_categories(id),'
                 'user_id INT REFERENCES users(id),'
-                'points FLOAT NOT NULL CHECK (points > 0));'
+                'points FLOAT CHECK (points > 0));'
                 
                 'CREATE TABLE IF NOT EXISTS sponsors ('
                 'id SERIAL PRIMARY KEY,'
