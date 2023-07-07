@@ -1,1 +1,0 @@
-from interbot.config import conn

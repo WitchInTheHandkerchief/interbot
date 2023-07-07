@@ -12,10 +12,10 @@ def init_db() -> None:
     cur.execute('CREATE TABLE IF NOT EXISTS users ('
                 'id SERIAL PRIMARY KEY,'
                 'telegram_id INT UNIQUE,'
-                'full_name VARCHAR(255) NOT NULL,'
+                'full_name VARCHAR(255),'
                 'token TEXT UNIQUE NOT NULL,'
                 'department VARCHAR(255),'
-                'is_admin BOOLEAN NOT NULL DEFAULT false);'
+                'is_admin BOOLEAN DEFAULT false);'
                 
                 'CREATE TABLE IF NOT EXISTS activity_categories ('
                 'id SERIAL PRIMARY KEY,'
