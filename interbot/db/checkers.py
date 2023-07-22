@@ -13,4 +13,4 @@ def check_admin(msg: Message) -> bool:
 
 
 def check_token(msg: Message) -> bool:
-    return check(f"SELECT COUNT(1) FROM USERS WHERE token = '{msg.text}' AND full_name IS NULL;")
+    return check(f"SELECT COUNT(1) FROM users WHERE token = '{msg.text}' AND full_name IS NULL;")
