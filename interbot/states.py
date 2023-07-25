@@ -7,3 +7,6 @@ class Form(StatesGroup):
     sponsor = State()
     check_sponsor = State()
     add_activity = State()
+    activity_name = State()
+    activity_quantity = State()
+

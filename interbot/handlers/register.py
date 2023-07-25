@@ -3,7 +3,7 @@ from aiogram.types import Message, ParseMode
 
 from interbot.config import dp
 from interbot.db.checkers import check_user, check_token
-from interbot.db.savers import save_telegram_id, save_full_name
+from interbot.db.adjusters import save_telegram_id, save_full_name
 from interbot.states import Form
 
 

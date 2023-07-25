@@ -1,6 +1,6 @@
 from aiogram import Dispatcher
 
-from interbot.handlers.activity import add_activity
+from interbot.handlers.activity import add_activity, process_activity_category, process_activity_name
 from interbot.handlers.cancel import cancel
 from interbot.handlers.register import register, process_token, process_name
 from interbot.handlers.sponsors import register_sponsor, check_sponsor, process_sponsor, process_check_sponsor
@@ -18,3 +18,5 @@ def setup(dp: Dispatcher):
     dp.register_inline_handler(process_sponsor)
     dp.register_inline_handler(process_check_sponsor)
     dp.register_inline_handler(add_activity)
+    dp.register_inline_handler(process_activity_category)
+    dp.register_inline_handler(process_activity_name)

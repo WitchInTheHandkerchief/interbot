@@ -3,7 +3,7 @@ from aiogram.types import Message, ParseMode
 
 from interbot.config import dp
 from interbot.db.fetchers import fetch_sponsor
-from interbot.db.savers import save_sponsor
+from interbot.db.adjusters import save_sponsor
 from interbot.filters import IsAdmin, IsUser
 from interbot.states import Form
 

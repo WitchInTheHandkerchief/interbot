@@ -34,7 +34,7 @@ def check(query: str) -> bool:
     return bool(result[0])
 
 
-def save(query: str) -> None:
+def adjust(query: str) -> None:
     conn = psycopg2.connect(
         host=config('HOST'),
         database=config('DB'),
