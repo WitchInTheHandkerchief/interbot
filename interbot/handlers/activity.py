@@ -6,7 +6,7 @@ from interbot.config import dp
 from interbot.db.checkers import check_category_if_exists, check_temp_activity
 from interbot.db.fetchers import fetch_categories
 from interbot.db.adjusters import save_category_id, save_activity_name, delete_temp_activity, save_activity
-from interbot.filters import IsUser
+from interbot.filters import IsUser, IsNotCommand
 from interbot.states import Form
 
 
@@ -20,7 +20,7 @@ async def add_activity(msg: Message) -> None:
     await Form.add_activity.set()
 
 
-@dp.message_handler(state=Form.add_activity, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.add_activity, content_types=['text'])
 async def process_activity_category(msg: Message, state: FSMContext) -> None:
     if check_category_if_exists(msg):
         await state.finish()
@@ -34,7 +34,7 @@ async def process_activity_category(msg: Message, state: FSMContext) -> None:
         await msg.answer(text="Категория введена неверно", parse_mode=ParseMode.HTML)
 
 
-@dp.message_handler(state=Form.activity_name, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.activity_name, content_types=['text'])
 async def process_activity_name(msg: Message, state: FSMContext) -> None:
     await state.finish()
     save_activity_name(msg)
@@ -43,7 +43,7 @@ async def process_activity_name(msg: Message, state: FSMContext) -> None:
     await Form.activity_quantity.set()
 
 
-@dp.message_handler(state=Form.activity_quantity, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.activity_quantity, content_types=['text'])
 async def process_activity_quantity(msg: Message, state: FSMContext) -> None:
     if msg.text.isdigit():
         await state.finish()

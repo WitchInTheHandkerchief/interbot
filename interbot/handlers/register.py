@@ -4,6 +4,7 @@ from aiogram.types import Message, ParseMode
 from interbot.config import dp
 from interbot.db.checkers import check_user, check_token
 from interbot.db.adjusters import save_telegram_id, save_full_name
+from interbot.filters import IsNotCommand
 from interbot.states import Form
 
 
@@ -18,7 +19,7 @@ async def register(msg: Message, state: FSMContext) -> None:
         await msg.answer(text='Введите пожалуйста ваш токен', parse_mode=ParseMode.HTML)
 
 
-@dp.message_handler(state=Form.token, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.token, content_types=['text'])
 async def process_token(msg: Message, state: FSMContext) -> None:
     token_exists = False
     try:
@@ -34,7 +35,7 @@ async def process_token(msg: Message, state: FSMContext) -> None:
         await msg.answer(text='Вы ввели <b>неверный</b> токен, попробуйте еще раз', parse_mode=ParseMode.HTML)
 
 
-@dp.message_handler(state=Form.name, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.name, content_types=['text'])
 async def process_name(msg: Message, state: FSMContext) -> None:
     await state.finish()
     save_full_name(msg)

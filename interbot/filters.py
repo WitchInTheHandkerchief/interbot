@@ -19,6 +19,14 @@ class IsUser(BoundFilter):
         return check_user(msg)
 
 
+class IsNotCommand(BoundFilter):
+    key = "is_not_command"
+
+    async def check(self, msg: Message) -> bool:
+        return not msg.text.startswith("/")
+
+
 def setup(dp: Dispatcher) -> None:
     dp.filters_factory.bind(IsAdmin)
     dp.filters_factory.bind(IsUser)
+    dp.filters_factory.bind(IsNotCommand)

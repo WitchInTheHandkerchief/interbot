@@ -4,7 +4,7 @@ from aiogram.types import Message, ParseMode
 from interbot.config import dp
 from interbot.db.fetchers import fetch_sponsor
 from interbot.db.adjusters import save_sponsor
-from interbot.filters import IsAdmin, IsUser
+from interbot.filters import IsAdmin, IsUser, IsNotCommand
 from interbot.states import Form
 
 
@@ -20,14 +20,14 @@ async def check_sponsor(msg: Message) -> None:
     await msg.answer(text='Введите <b>инстаграм</b> спонсора, которого хотите проверить', parse_mode=ParseMode.HTML)
 
 
-@dp.message_handler(state=Form.sponsor, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.sponsor, content_types=['text'])
 async def process_sponsor(msg: Message, state: FSMContext) -> None:
     save_sponsor(msg)
     await state.finish()
     await msg.answer(text='<b>Обзвон зарегистрирован!</b>', parse_mode=ParseMode.HTML)
 
 
-@dp.message_handler(state=Form.check_sponsor, content_types=['text'])
+@dp.message_handler(IsNotCommand(), state=Form.check_sponsor, content_types=['text'])
 async def process_check_sponsor(msg: Message, state: FSMContext) -> None:
     await state.finish()
     call_list = fetch_sponsor(msg)
