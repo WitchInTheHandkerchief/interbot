@@ -4,7 +4,7 @@ from aiogram.types import Message, ParseMode
 
 from interbot.config import dp
 from interbot.db.checkers import check_category_if_exists, check_temp_activity
-from interbot.db.fetchers import fetch_categories
+from interbot.db.fetchers import fetch_categories, fetch_activity
 from interbot.db.adjusters import save_category_id, save_activity_name, delete_temp_activity, save_activity
 from interbot.filters import IsUser, IsNotCommand
 from interbot.states import Form
@@ -15,7 +15,7 @@ async def add_activity(msg: Message) -> None:
     await msg.answer(text='Выберите одну из нижеперечисленных категорий активности', parse_mode=ParseMode.HTML)
     categories = ''
     for category in fetch_categories():
-        categories += category[0] + " \n"
+        categories += f"{category[0]} \n"
     await msg.answer(text=categories, parse_mode=ParseMode.HTML)
     await Form.add_activity.set()
 
@@ -51,3 +51,16 @@ async def process_activity_quantity(msg: Message, state: FSMContext) -> None:
         await msg.answer(text="Активность сохранена!")
     else:
         await msg.answer(text="Введите число!")
+
+
+@dp.message_handler(IsUser(), commands=['check_activity'])
+async def check_activity(msg: Message) -> None:
+    activity_list = fetch_activity(msg)
+    output_message = ""
+    if activity_list:
+        for activity in activity_list:
+            output_message += f"{activity[0]}, {str(activity[1])} баллов, {str(activity[2])}\n"
+        output_message += f"В общем: {sum([activity[1] for activity in activity_list])} баллов"
+        await msg.answer(text=output_message, parse_mode=ParseMode.HTML)
+    else:
+        await msg.answer(text="Активность отсутствует", parse_mode=ParseMode.HTML)

@@ -11,3 +11,8 @@ def fetch_sponsor(msg: Message) -> List[tuple]:
 
 def fetch_categories() -> List[tuple]:
     return fetch_all(f"SELECT name FROM activity_categories;")
+
+
+def fetch_activity(msg: Message) -> List[tuple]:
+    return fetch_all(f"SELECT name, points, date_added FROM activity WHERE user_id = "
+                     f"(SELECT id FROM users WHERE telegram_id = {msg.from_user.id});")
